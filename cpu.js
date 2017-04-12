@@ -6,43 +6,58 @@ var CPU = function() {
 }
 
 CPU.prototype.move = function() {
-    //check if can automatically win/need to defend
+
+    if (this.tryToWin() || this.takeCorner() || this.failsafe()) {
+        this.turn = false;
+    } else {
+        console.log("Something went wrong.");
+    }
+
+    return;
+
+}
+
+CPU.prototype.tryToWin = function() {
+
     for (var x = 0; x < game.winningNums.length; x++) {
         for (var y = 0; y < game.winningNums[x].length; y++) {
             if ($('#' + game.winningNums[x][y]).hasClass('free')) {
-                if (this.predictWin(game.winningNums[x][y])) {
+                if (this.winningMove(game.winningNums[x][y])) {
                     $("#" + game.winningNums[x][y]).addClass("cpu").empty().append(this.piece).removeClass('free');
-                    return this.turn = false;
+                    return true;
 
                 }
             }
         }
     }
-    //take corners if center is free
+}
+
+CPU.prototype.takeCorner = function() {
+    // Takes two corners and if center is still free, it will take it (Classic tic-tac-toe trick)
+    if (this.cornerCount == 2 && $('#4').hasClass('free')) {
+        $('#4').addClass("cpu").empty().append(this.piece).removeClass('free');
+        return true;
+    }
     for (var k = 0; k < game.corners.length; k++) {
-        if (this.cornerCount == 2 && $('#4').hasClass('free')) {
-            $('#4').addClass("cpu").empty().append(this.piece).removeClass('free');
-            return this.turn = false;
-        } else if ($('#' + game.corners[k]).hasClass("free") && $('#4').hasClass('free')) {
-            this.cornercount++
-                $('#' + game.corners[k]).addClass("cpu").empty().append(this.piece).removeClass('free');
-            return this.turn = false;
+        if ($('#' + game.corners[k]).hasClass("free")) {
+            this.cornerCount++
+            $('#' + game.corners[k]).addClass("cpu").empty().append(this.piece).removeClass('free');
+            return true;
         }
     }
+}
 
-    //failsafe (places piece)
+CPU.prototype.failsafe = function() {
+
     for (var j = 0; j < 9; j++) {
         if ($("#" + j).hasClass('free')) {
             $('#' + (j)).addClass("cpu").empty().append(this.piece).removeClass('free');
-            return this.turn = false;
+            return true;
         }
     }
-
-    return this.turn = false;
-
 }
 
-CPU.prototype.predictWin = function(square) {
+CPU.prototype.winningMove = function(square) {
 
     for (var i = 0; i < game.winningNums.length; i++) {
         var cpuCount = 0;
@@ -54,9 +69,7 @@ CPU.prototype.predictWin = function(square) {
                 } else if ($('#' + game.winningNums[i][y]).hasClass('player') && game.winningNums[i][y] != game.winningNums[i][square]) {
                     playerCount++
                 }
-                if (cpuCount == 2) {
-                    return true;
-                } else if (playerCount == 2) {
+                if (cpuCount == 2 || playerCount == 2) {
                     return true;
                 }
             }

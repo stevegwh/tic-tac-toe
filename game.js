@@ -1,17 +1,30 @@
+function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex;
+  while (0 !== currentIndex) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+
 var Game = function() {
     this.init = false;
     this.winningNums = [
+        [1, 4, 7],
         [0, 1, 2],
         [3, 4, 5],
         [6, 7, 8],
         [0, 3, 6],
-        [1, 4, 7],
         [2, 5, 8],
         [0, 4, 8],
         [2, 4, 6],
         [6, 4, 2]
     ];
-    this.corners = [2, 8, 6, 0];
+    this.corners = shuffle([2, 8, 6, 0]);
 
 }
 
