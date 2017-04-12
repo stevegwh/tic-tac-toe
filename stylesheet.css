@@ -1,0 +1,56 @@
+@import url(https://fonts.googleapis.com/css?family=Pacifico|Open+Sans:300);
+#title {
+font-size: 10vmin;
+margin-bottom: 30px;
+text-align: center;
+color: #F0F0F0;
+text-shadow: 2px 2px 1px black;
+font-family: "pacifico";
+}
+body {
+  margin: 20px;
+  background-image: url("background.jpg")
+}
+#cont {
+  position: relative;
+  margin: 0 auto;
+  width: 33vmax;
+  background-color: #B0B0B0;
+  overflow: hidden;
+text-align: center;
+border-radius: 5%;
+}
+
+#game_board {
+background: #F0F0F0
+font-size: 3vmax;
+  margin: 0 auto;
+display: inline-block;
+}
+
+.btn-row {
+  position: relative;
+  text-align: center;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.square {
+background-color: #d3d3d3;
+  text-align: center;
+  float: left;
+  position: relative;
+  margin: 1px;
+  padding: 5px;
+  width: 9vmax;
+-webkit-filter: invert(100%);
+filter: invert(100%);
+}
+
+.btn-disabled {
+  opacity: 0.25;
+}
+
+#spacer {
+    padding: 1vmax;
+}
