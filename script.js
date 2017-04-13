@@ -1,7 +1,6 @@
- var toggle, game, player, cpu, pieceSize = "100%";
+ var game, player, cpu, pieceSize = "100%";
 
  function setup(reset) {
-     toggle = false;
      game = new Game();
      player = new Player();
      cpu = new CPU();
@@ -9,6 +8,7 @@
          $('#start, #select').removeClass("btn-disabled");
          $('.square').removeClass().addClass("free square").text("");
          $('#xoro').text("X");
+         $('#first').text('CPU');
      }
  }
 

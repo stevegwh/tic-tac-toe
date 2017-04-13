@@ -1,4 +1,5 @@
 var CPU = function() {
+    this.name = "cpu";
     this.turn = false;
     this.cornerCount = 0;
     this.count = 0;
@@ -7,8 +8,11 @@ var CPU = function() {
 
 CPU.prototype.move = function() {
 
+    this.CvCtoggle();
+
     if (this.tryToWin() || this.takeCorner() || this.failsafe()) {
-        this.turn = false;
+        if(game.mode != "CvC")
+            this.turn = false;
     } else {
         console.log("Something went wrong.");
     }
@@ -17,31 +21,26 @@ CPU.prototype.move = function() {
 
 }
 
-CPU.prototype.tryToWin = function() {
-
-    for (var x = 0; x < game.winningNums.length; x++) {
-        for (var y = 0; y < game.winningNums[x].length; y++) {
-            if ($('#' + game.winningNums[x][y]).hasClass('free')) {
-                if (this.winningMove(game.winningNums[x][y])) {
-                    $("#" + game.winningNums[x][y]).addClass("cpu").empty().append(this.piece).removeClass('free');
-                    return true;
-
-                }
-            }
-        }
+CPU.prototype.CvCtoggle = function() {
+    if(game.mode == "CvC" && this.name == "cpu") {
+        this.name = "player"
+        this.piece = "<img src='X.png' width='100%' height='100%'></img>";
+    } else {
+        this.name = "cpu"
+        this.piece = "<img src='O.png' width='100%' height='100%'></img>";
     }
 }
 
 CPU.prototype.takeCorner = function() {
     // Takes two corners and if center is still free, it will take it (Classic tic-tac-toe trick)
     if (this.cornerCount == 2 && $('#4').hasClass('free')) {
-        $('#4').addClass("cpu").empty().append(this.piece).removeClass('free');
+        $('#4').addClass(this.name).empty().append(this.piece).removeClass('free');
         return true;
     }
     for (var k = 0; k < game.corners.length; k++) {
         if ($('#' + game.corners[k]).hasClass("free")) {
             this.cornerCount++
-            $('#' + game.corners[k]).addClass("cpu").empty().append(this.piece).removeClass('free');
+                $('#' + game.corners[k]).addClass(this.name).empty().append(this.piece).removeClass('free');
             return true;
         }
     }
@@ -51,29 +50,42 @@ CPU.prototype.failsafe = function() {
 
     for (var j = 0; j < 9; j++) {
         if ($("#" + j).hasClass('free')) {
-            $('#' + (j)).addClass("cpu").empty().append(this.piece).removeClass('free');
+            $('#' + (j)).addClass(this.name).empty().append(this.piece).removeClass('free');
             return true;
         }
     }
 }
 
-CPU.prototype.winningMove = function(square) {
+CPU.prototype.isWinningMove = function(square) {
+    var indexes = []
+    for (var i = 0; i < game.winningNums.length; i++)
+        if (game.winningNums[i].indexOf(square) >= 0)
+            indexes.push(i);
 
-    for (var i = 0; i < game.winningNums.length; i++) {
+    for (var x = 0; x < indexes.length; x++) {
         var cpuCount = 0;
         var playerCount = 0;
-        for (var y = 0; y < game.winningNums[i].length; y++) {
-            if (game.winningNums[i].indexOf(square) >= 0) {
-                if ($('#' + game.winningNums[i][y]).hasClass('cpu') && game.winningNums[i][y] != game.winningNums[i][square]) {
+        for (var y = 0; y < 3; y++) {
+            if ($('#' + game.winningNums[indexes[x]][y]).hasClass('cpu'))
                     cpuCount++;
-                } else if ($('#' + game.winningNums[i][y]).hasClass('player') && game.winningNums[i][y] != game.winningNums[i][square]) {
-                    playerCount++
-                }
-                if (cpuCount == 2 || playerCount == 2) {
+            if ($('#' + game.winningNums[indexes[x]][y]).hasClass('player'))
+                    playerCount++;
+            if (cpuCount == 2 || playerCount == 2)
                     return true;
+        }
+    }
+}
+
+CPU.prototype.tryToWin = function() {
+    for (var x = 0; x < game.winningNums.length; x++) {
+        for (var y = 0; y < game.winningNums[x].length; y++) {
+            if ($('#' + game.winningNums[x][y]).hasClass('free')) {
+                if (this.isWinningMove(game.winningNums[x][y])) {
+                    $("#" + game.winningNums[x][y]).addClass(this.name).empty().append(this.piece).removeClass('free');
+                    return true;
+
                 }
             }
         }
     }
-
 }

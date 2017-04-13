@@ -8,7 +8,6 @@ text-shadow: 2px 2px 1px black;
 font-family: "pacifico";
 }
 body {
-  margin: 20px;
   background-image: url("background.jpg")
 }
 #cont {
@@ -53,4 +52,26 @@ filter: invert(100%);
 
 #spacer {
     padding: 1vmax;
+}
+
+@media (max-width: 540px)
+{
+  #cont {
+      width: 60vmin;
+  }
+
+  .square {
+      width: 15vmin;
+  }
+}
+
+@media (max-width: 250px)
+{
+  #cont {
+      width: 100%;
+  }
+
+  .square {
+      width: 20vmin;
+  }
 }

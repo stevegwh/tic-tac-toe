@@ -12,6 +12,9 @@ function shuffle(array) {
 }
 
 var Game = function() {
+    this.playerturn = false;
+    this.playerfirst = false;
+    this.mode = "PvC";
     this.init = false;
     this.winningNums = [
         [1, 4, 7],
@@ -21,8 +24,7 @@ var Game = function() {
         [0, 3, 6],
         [2, 5, 8],
         [0, 4, 8],
-        [2, 4, 6],
-        [6, 4, 2]
+        [2, 4, 6]
     ];
     this.corners = shuffle([2, 8, 6, 0]);
 
@@ -61,7 +63,6 @@ Game.prototype.checkDraw = function() {
       } else if(j == 8) {
         setup(true);
         alert("It's a draw!");
-      }
-
+    }
     }
 }
