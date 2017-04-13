@@ -2,19 +2,18 @@
 
 <head>
 	<title>Tic Tac Toe</title>
-	<link rel="stylesheet" href="stylesheet.css" />
+	<link rel="stylesheet" href="lib/stylesheet.css" />
+	<script src="https://use.fontawesome.com/a93ce4c3fd.js"></script>
 </head>
 
 <body onload="setup()">
 
-
-
-	<div id="title">FreeCodeCamp</div>
 	<div id="cont">
 		<div class="btn-row">
-			<button id='select'>You are <span id="xoro">X</span></button>
-			<button id='start'>Start Game</button>
+			<button id='select' class="mode">You are <span id="xoro">X</span></button>
+			<button id='start' class="mode">Start Game</button>
 			<button id="reset">Reset</button>
+			<button id='first-select'class="mode">First: <span id="first"><i class="fa fa-desktop" aria-hidden="true"></i></span></button>
 		</div>
 		<div id="game_board">
 			<div class="row">
@@ -34,17 +33,16 @@
 			</div>
 		</div>
 		<div id="spacer">
-			<button id='first-select'>First: <span id="first">CPU</span></button>
-			<button id='2p-mode'>2 Player</button>
-			<button id="cpu-mode">CPU vs CPU</button>
-			<button id="normal-mode">Player vs CPU</button>
+			<button id='2p-mode'class="mode"><i class="fa fa-user" aria-hidden="true"></i> vs <i class="fa fa-user" aria-hidden="true"></i></button>
+			<button id="cpu-mode"class="mode"><i class="fa fa-desktop" aria-hidden="true"></i> vs <i class="fa fa-desktop" aria-hidden="true"></i></button>
+			<button id="normal-mode"class="mode"><i class="fa fa-user" aria-hidden="true"></i> vs <i class="fa fa-desktop" aria-hidden="true"></i></button>
 		</div>
 	</div>
 
-	<script type="text/javascript" src="jquery-3.1.1.min.js"></script>
-	<script type="text/javascript" src="eventlisteners.js"></script>
-	<script type="text/javascript" src="game.js"></script>
-	<script type="text/javascript" src="player.js"></script>
-	<script type="text/javascript" src="cpu.js"></script>
-	<script type="text/javascript" src="script.js"></script>
+	<script type="text/javascript" src="lib/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="lib/eventlisteners.js"></script>
+	<script type="text/javascript" src="lib/game.js"></script>
+	<script type="text/javascript" src="lib/player.js"></script>
+	<script type="text/javascript" src="lib/cpu.js"></script>
+	<script type="text/javascript" src="lib/script.js"></script>
 </body>
